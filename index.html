@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Viral Reels • Click & Earn</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: #000000;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #ffffff;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Main container - Instagram style */
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: #000;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: #000;
+            border-bottom: 0.5px solid #222;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ff4d4d, #ff8c00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 20px;
+            font-size: 22px;
+        }
+
+        /* Story section */
+        .stories {
+            padding: 12px 16px;
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            border-bottom: 0.5px solid #222;
+        }
+
+        .story {
+            text-align: center;
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        .story-circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff4d4d, #ff8c00);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 6px;
+        }
+
+        .story-circle-inner {
+            width: 66px;
+            height: 66px;
+            border-radius: 50%;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+
+        /* Reel Card - CLICKABLE ENTIRE CARD */
+        .reel-card {
+            margin-bottom: 16px;
+            background: #000;
+            cursor: pointer;
+            transition: 0.1s linear;
+            border-bottom: 0.5px solid #222;
+        }
+
+        .reel-card:active {
+            opacity: 0.85;
+        }
+
+        /* Header of reel */
+        .reel-header {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .username {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .time {
+            font-size: 11px;
+            color: #aaa;
+        }
+
+        .menu-dots {
+            font-size: 20px;
+            color: #aaa;
+        }
+
+        /* Thumbnail / Video Area */
+        .thumbnail-area {
+            position: relative;
+            width: 100%;
+            background: #111;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .placeholder-video {
+            width: 100%;
+            min-height: 500px;
+            background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .placeholder-video span {
+            font-size: 64px;
+        }
+
+        .hot-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #ff4d4d;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .views-overlay {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            background: rgba(0,0,0,0.6);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 16px;
+        }
+
+        .left-actions {
+            display: flex;
+            gap: 24px;
+        }
+
+        .action-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .save-icon {
+            font-size: 24px;
+        }
+
+        /* Caption Area */
+        .caption {
+            padding: 0 16px 12px 16px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .caption strong {
+            font-weight: 700;
+        }
+
+        .hashtags {
+            color: #0095f6;
+        }
+
+        .comments {
+            padding: 0 16px 12px 16px;
+            color: #aaa;
+            font-size: 13px;
+        }
+
+        /* ===== ADD BANNER / AD SPACE ===== */
+        .ad-banner {
+            margin: 16px;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 16px;
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ff4d4d30;
+            cursor: pointer;
+        }
+
+        .ad-banner span {
+            font-size: 14px;
+            color: #ffaa00;
+        }
+
+        .ad-banner small {
+            display: block;
+            font-size: 10px;
+            color: #aaa;
+        }
+
+        /* Click anywhere toast */
+        .toast-msg {
+            position: fixed;
+            bottom: 30px;
+            left: 20px;
+            right: 20px;
+            background: #222;
+            color: #ffaa00;
+            text-align: center;
+            padding: 12px;
+            border-radius: 30px;
+            font-size: 14px;
+            z-index: 200;
+            opacity: 0;
+            transition: 0.2s;
+            pointer-events: none;
+            font-weight: 500;
+        }
+
+        .toast-msg.show {
+            opacity: 1;
+            bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="mainContainer">
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">🔥 Viral Reels</div>
+        <div class="header-icons">
+            <span>📷</span>
+            <span>❤️</span>
+            <span>💬</span>
+        </div>
+    </div>
+
+    <!-- Stories -->
+    <div class="stories">
+        <div class="story"><div class="story-circle"><div class="story-circle-inner">👤</div></div><div>Your story</div></div>
+        <div class="story"><div class="story-circle"><div class="story-circle-inner">🔥</div></div><div>Trending</div></div>
+        <div class="story"><div class="story-circle"><div class="story-circle-inner">🎬</div></div><div>Reels</div></div>
+        <div class="story"><div class="story-circle"><div class="story-circle-inner">✨</div></div><div>Viral</div></div>
+    </div>
+
+    <!-- ============ REEL CARD 1 (100% clickable - tera direct link) ============ -->
+    <div class="reel-card" data-link="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65">
+        <div class="reel-header">
+            <div class="avatar">👩</div>
+            <div class="user-info">
+                <div class="username">priya_official</div>
+                <div class="time">2m ago • Follow</div>
+            </div>
+            <div class="menu-dots">⋯</div>
+        </div>
+
+        <div class="thumbnail-area">
+            <div class="placeholder-video">
+                <span>🎬</span>
+                <span style="font-size:14px;">Tera Video / Image yahan aayega</span>
+                <span style="font-size:12px; color:#888;">(Tu khud dalna)</span>
+            </div>
+            <div class="hot-badge">HOT</div>
+            <div class="views-overlay">👁️ 98.2K views • 0:47</div>
+        </div>
+
+        <div class="action-buttons">
+            <div class="left-actions">
+                <div class="action-item">❤️ 12.4K</div>
+                <div class="action-item">💬 Comment</div>
+                <div class="action-item">📤 Share</div>
+            </div>
+            <div class="save-icon">🔖</div>
+        </div>
+
+        <div class="caption">
+            <strong>priya_official</strong> Viral ho gaya yeh reel 😂 <span class="hashtags">#trending #viral</span>
+        </div>
+        <div class="comments">
+            View all 2.1K comments
+        </div>
+    </div>
+
+    <!-- ============ REEL CARD 2 (clickable) ============ -->
+    <div class="reel-card" data-link="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65">
+        <div class="reel-header">
+            <div class="avatar">👩‍🎤</div>
+            <div class="user-info">
+                <div class="username">Nena_creates</div>
+                <div class="time">15m ago • Follow</div>
+            </div>
+            <div class="menu-dots">⋯</div>
+        </div>
+
+        <div class="thumbnail-area">
+            <div class="placeholder-video">
+                <span>📸</span>
+                <span style="font-size:14px;">Tera content yahan</span>
+                <span style="font-size:12px; color:#888;">(Tu apni photo/video dalega)</span>
+            </div>
+            <div class="hot-badge">🔥 TRENDING</div>
+            <div class="views-overlay">👁️ 512K views • 1:28</div>
+        </div>
+
+        <div class="action-buttons">
+            <div class="left-actions">
+                <div class="action-item">❤️ 44.1K</div>
+                <div class="action-item">💬 Comment</div>
+                <div class="action-item">📤 Share</div>
+            </div>
+            <div class="save-icon">🔖</div>
+        </div>
+
+        <div class="caption">
+            <strong>Nena_creates</strong> Dekho aur share karo zaroor 😂 <span class="hashtags">#trending #explore</span>
+        </div>
+        <div class="comments">
+            View all 5.3K comments
+        </div>
+    </div>
+
+    <!-- ============ REEL CARD 3 (extra viral) ============ -->
+    <div class="reel-card" data-link="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65">
+        <div class="reel-header">
+            <div class="avatar">👨‍🎤</div>
+            <div class="user-info">
+                <div class="username">riya_world</div>
+                <div class="time">13h ago • Follow</div>
+            </div>
+            <div class="menu-dots">⋯</div>
+        </div>
+
+        <div class="thumbnail-area">
+            <div class="placeholder-video">
+                <span>🎥</span>
+                <span style="font-size:14px;">Tera media yahan</span>
+                <span style="font-size:12px; color:#888;">(Tu apna image/video replace karega)</span>
+            </div>
+            <div class="hot-badge">💥 VIRAL</div>
+            <div class="views-overlay">👁️ 340K views • 2:17</div>
+        </div>
+
+        <div class="action-buttons">
+            <div class="left-actions">
+                <div class="action-item">❤️ 28.7K</div>
+                <div class="action-item">💬 Comment</div>
+                <div class="action-item">📤 Share</div>
+            </div>
+            <div class="save-icon">🔖</div>
+        </div>
+
+        <div class="caption">
+            <strong>riya_world</strong> Itna fire content 😂 <span class="hashtags">#insta #viral</span>
+        </div>
+        <div class="comments">
+            View all 3.8K comments
+        </div>
+    </div>
+
+    <!-- AD BANNER (teri marzi se extra earning) -->
+    <div class="ad-banner" data-link="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65">
+        <span>✨ Sponsor • Click Here ✨</span>
+        <small>Support us → Earn Rewards</small>
+    </div>
+</div>
+
+<div id="toastMsg" class="toast-msg">🚀 Redirecting to offer...</div>
+
+<script>
+    // Tera direct link (kahi bhi click karega toh yahi khulega)
+    const REDIRECT_URL = "https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65";
+
+    // Function to redirect and show toast
+    function handleClickAndRedirect(event) {
+        // Agar click kisi special element pe ho toh bhi redirect karega
+        // Pure card aur banner ke liye kaam karega
+        event.stopPropagation();
+        showToast("⏳ Opening link...");
+        setTimeout(() => {
+            window.location.href = REDIRECT_URL;
+        }, 150);
+    }
+
+    function showToast(msg) {
+        const toast = document.getElementById("toastMsg");
+        toast.innerText = msg;
+        toast.classList.add("show");
+        setTimeout(() => {
+            toast.classList.remove("show");
+        }, 1200);
+    }
+
+    // Sabhi .reel-card aur .ad-banner pe click listener laga do
+    const clickableElements = document.querySelectorAll('.reel-card, .ad-banner');
+    clickableElements.forEach(el => {
+        el.addEventListener('click', handleClickAndRedirect);
+    });
+
+    // Extra: Agar koi bhi inner element click ho toh bhi kaam kare (par already event bubbling se kaam karega)
+    console.log("✅ Landing page ready! Har click tera direct link khol dega. Photo/text tu khud dalega.");
+</script>
+</body>
+</html>
