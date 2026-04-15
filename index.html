@@ -1,463 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Viral Reels • Click & Earn</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            background: #000000;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            color: #ffffff;
-            padding: 0;
-            margin: 0;
-        }
-
-        /* Main container - Instagram style */
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-            background: #000;
-            min-height: 100vh;
-        }
-
-        /* Header */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 16px;
-            background: #000;
-            border-bottom: 0.5px solid #222;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            background: linear-gradient(45deg, #ff4d4d, #ff8c00);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .header-icons {
-            display: flex;
-            gap: 20px;
-            font-size: 22px;
-        }
-
-        /* Story section */
-        .stories {
-            padding: 12px 16px;
-            display: flex;
-            gap: 16px;
-            overflow-x: auto;
-            border-bottom: 0.5px solid #222;
-        }
-
-        .story {
-            text-align: center;
-            font-size: 12px;
-            color: #aaa;
-        }
-
-        .story-circle {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #ff4d4d, #ff8c00);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 6px;
-        }
-
-        .story-circle-inner {
-            width: 66px;
-            height: 66px;
-            border-radius: 50%;
-            background: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-        }
-
-        /* Reel Card - CLICKABLE ENTIRE CARD */
-        .reel-card {
-            margin-bottom: 16px;
-            background: #000;
-            cursor: pointer;
-            transition: 0.1s linear;
-            border-bottom: 0.5px solid #222;
-        }
-
-        .reel-card:active {
-            opacity: 0.85;
-        }
-
-        /* Header of reel */
-        .reel-header {
-            display: flex;
-            align-items: center;
-            padding: 12px 16px;
-            gap: 12px;
-        }
-
-        .avatar {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-
-        .user-info {
-            flex: 1;
-        }
-
-        .username {
-            font-weight: 700;
-            font-size: 14px;
-        }
-
-        .time {
-            font-size: 11px;
-            color: #aaa;
-        }
-
-        .menu-dots {
-            font-size: 20px;
-            color: #aaa;
-        }
-
-        /* Thumbnail / Video Area */
-        .thumbnail-area {
-            position: relative;
-            width: 100%;
-            background: #111;
-            min-height: 500px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .placeholder-video {
-            width: 100%;
-            min-height: 500px;
-            background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-        }
-
-        .placeholder-video span {
-            font-size: 64px;
-        }
-
-        .hot-badge {
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            background: #ff4d4d;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .views-overlay {
-            position: absolute;
-            bottom: 12px;
-            left: 12px;
-            background: rgba(0,0,0,0.6);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-        }
-
-        /* Action Buttons */
-        .action-buttons {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 16px;
-        }
-
-        .left-actions {
-            display: flex;
-            gap: 24px;
-        }
-
-        .action-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .save-icon {
-            font-size: 24px;
-        }
-
-        /* Caption Area */
-        .caption {
-            padding: 0 16px 12px 16px;
-            font-size: 14px;
-            line-height: 1.4;
-        }
-
-        .caption strong {
-            font-weight: 700;
-        }
-
-        .hashtags {
-            color: #0095f6;
-        }
-
-        .comments {
-            padding: 0 16px 12px 16px;
-            color: #aaa;
-            font-size: 13px;
-        }
-
-        /* ===== ADD BANNER / AD SPACE ===== */
-        .ad-banner {
-            margin: 16px;
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            border-radius: 16px;
-            padding: 12px;
-            text-align: center;
-            border: 1px solid #ff4d4d30;
-            cursor: pointer;
-        }
-
-        .ad-banner span {
-            font-size: 14px;
-            color: #ffaa00;
-        }
-
-        .ad-banner small {
-            display: block;
-            font-size: 10px;
-            color: #aaa;
-        }
-
-        /* Click anywhere toast */
-        .toast-msg {
-            position: fixed;
-            bottom: 30px;
-            left: 20px;
-            right: 20px;
-            background: #222;
-            color: #ffaa00;
-            text-align: center;
-            padding: 12px;
-            border-radius: 30px;
-            font-size: 14px;
-            z-index: 200;
-            opacity: 0;
-            transition: 0.2s;
-            pointer-events: none;
-            font-weight: 500;
-        }
-
-        .toast-msg.show {
-            opacity: 1;
-            bottom: 40px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>HotReels • Viral Reels Feed</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0d0d0d; color: #fff; font-family: 'Poppins', sans-serif; max-width: 480px; margin: 0 auto; min-height: 100vh; }
+  .topbar { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: #111; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #222; }
+  .logo { font-size: 22px; font-weight: 800; letter-spacing: 1px; }
+  .logo span:first-child { color: #ff2d55; }
+  .logo span:last-child { color: #ff9500; }
+  .live-badge { display: flex; align-items: center; gap: 6px; background: #1a1a1a; border: 1px solid #ff2d55; border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 600; color: #ff2d55; }
+  .live-dot { width: 8px; height: 8px; background: #ff2d55; border-radius: 50%; animation: pulse 1.2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(0.7);} }
+  .trending-section { padding: 14px 14px 0; }
+  .section-title { font-size: 13px; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; }
+  .trending-banner { position: relative; border-radius: 14px; overflow: hidden; background: #1a1a1a; cursor: pointer; text-decoration: none; display: block; transition: 0.2s; }
+  .thumb-img { width: 100%; height: 200px; object-fit: cover; display: block; transition: transform 0.3s; }
+  .reel-thumb .thumb-img { height: 220px; }
+  .trending-banner:hover .thumb-img { transform: scale(1.02); }
+  .thumb-placeholder { width: 100%; height: 200px; background: #1c1c2e; display: flex; align-items: center; justify-content: center; color: #888; font-size: 13px; flex-direction: column; gap: 6px; }
+  .reel-thumb .thumb-placeholder { height: 220px; }
+  .thumb-placeholder span { font-size: 32px; }
+  .trending-tag { position: absolute; top: 10px; left: 10px; background: linear-gradient(135deg,#ff2d55,#ff6b35); border-radius: 8px; padding: 4px 10px; font-size: 11px; font-weight: 700; z-index: 2; }
+  .play-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.2); backdrop-filter: brightness(0.9); border-radius: 14px; z-index: 1; }
+  .play-btn { width: 52px; height: 52px; background: rgba(0,0,0,0.65); border-radius: 50%; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px); transition: transform 0.2s; border: 1px solid rgba(255,255,255,0.3); }
+  .play-btn svg { width: 22px; fill: white; margin-left: 3px; }
+  .duration-badge { position: absolute; bottom: 12px; right: 12px; background: rgba(0,0,0,0.75); border-radius: 20px; padding: 2px 10px; font-size: 12px; font-weight: 600; backdrop-filter: blur(2px); z-index: 2; }
+  .card-info { padding: 10px 14px 14px; }
+  .card-title { font-size: 14px; font-weight: 600; margin-bottom: 10px; line-height: 1.4; color: #f0f0f0; }
+  .hashtag { color: #a259ff; }
+  .card-stats { display: flex; align-items: center; gap: 16px; font-size: 12px; color: #aaa; flex-wrap: wrap; }
+  .stat { display: flex; align-items: center; gap: 5px; cursor: pointer; transition: color 0.2s; font-weight: 500; }
+  .stat:hover { color: #ff2d55; }
+  .stat svg { width: 15px; }
+  .views-count { margin-left: auto; font-size: 11px; background: #222; border-radius: 20px; padding: 3px 10px; color: #ccc; font-weight: 500; }
+  .reel-card { background: #141414; border-radius: 18px; margin: 16px 14px 0; overflow: hidden; border: 1px solid #242424; transition: border-color 0.2s; }
+  .reel-card:hover { border-color: #3a3a3a; }
+  .reel-header { display: flex; align-items: center; padding: 12px 14px; gap: 10px; }
+  .avatar { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; flex-shrink: 0; position: relative; color: white; text-shadow: 0 0 2px black; }
+  .online-dot { position: absolute; bottom: 2px; right: 2px; width: 10px; height: 10px; background: #30d158; border-radius: 50%; border: 2px solid #141414; }
+  .user-info { flex: 1; }
+  .username { font-size: 14px; font-weight: 700; color: #fff; }
+  .user-meta { font-size: 11px; color: #888; margin-top: 2px; }
+  .follow-btn { background: linear-gradient(135deg,#a259ff,#7b2fff); border: none; border-radius: 30px; padding: 6px 16px; font-size: 12px; font-weight: 600; color: #fff; cursor: pointer; transition: 0.2s; font-family: 'Poppins',sans-serif; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+  .follow-btn:hover { opacity: 0.85; transform: scale(1.02); }
+  .reel-thumb { position: relative; cursor: pointer; display: block; text-decoration: none; overflow: hidden; }
+  .reel-thumb:hover .thumb-img { transform: scale(1.02); }
+  .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: #111; border-top: 1px solid #252525; display: flex; justify-content: space-around; padding: 8px 0 14px; z-index: 100; backdrop-filter: blur(2px); }
+  .nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 10px; color: #666; cursor: pointer; transition: color 0.2s; }
+  .nav-item.active { color: #ff2d55; }
+  .nav-item svg { width: 22px; fill: currentColor; stroke: currentColor; }
+  .bottom-spacer { height: 80px; }
+  button { background: none; border: none; }
+  @media (max-width: 480px) { .card-title { font-size: 13px; } .stat { font-size: 11px; } }
+</style>
 </head>
 <body>
-<div class="container" id="mainContainer">
-    <!-- Header -->
-    <div class="header">
-        <div class="logo">🔥 Viral Reels</div>
-        <div class="header-icons">
-            <span>📷</span>
-            <span>❤️</span>
-            <span>💬</span>
-        </div>
-    </div>
 
-    <!-- Stories -->
-    <div class="stories">
-        <div class="story"><div class="story-circle"><div class="story-circle-inner">👤</div></div><div>Your story</div></div>
-        <div class="story"><div class="story-circle"><div class="story-circle-inner">🔥</div></div><div>Trending</div></div>
-        <div class="story"><div class="story-circle"><div class="story-circle-inner">🎬</div></div><div>Reels</div></div>
-        <div class="story"><div class="story-circle"><div class="story-circle-inner">✨</div></div><div>Viral</div></div>
-    </div>
-
-    <!-- ============ REEL CARD 1 (100% clickable - tera direct link) ============ -->
-    <div class="reel-card" data-link="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65">
-        <div class="reel-header">
-            <div class="avatar">👩</div>
-            <div class="user-info">
-                <div class="username">priya_official</div>
-                <div class="time">2m ago • Follow</div>
-            </div>
-            <div class="menu-dots">⋯</div>
-        </div>
-
-        <div class="thumbnail-area">
-            <div class="placeholder-video">
-                <span>🎬</span>
-                <span style="font-size:14px;">Tera Video / Image yahan aayega</span>
-                <span style="font-size:12px; color:#888;">(Tu khud dalna)</span>
-            </div>
-            <div class="hot-badge">HOT</div>
-            <div class="views-overlay">👁️ 98.2K views • 0:47</div>
-        </div>
-
-        <div class="action-buttons">
-            <div class="left-actions">
-                <div class="action-item">❤️ 12.4K</div>
-                <div class="action-item">💬 Comment</div>
-                <div class="action-item">📤 Share</div>
-            </div>
-            <div class="save-icon">🔖</div>
-        </div>
-
-        <div class="caption">
-            <strong>priya_official</strong> Viral ho gaya yeh reel 😂 <span class="hashtags">#trending #viral</span>
-        </div>
-        <div class="comments">
-            View all 2.1K comments
-        </div>
-    </div>
-
-    <!-- ============ REEL CARD 2 (clickable) ============ -->
-    <div class="reel-card" data-link="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65">
-        <div class="reel-header">
-            <div class="avatar">👩‍🎤</div>
-            <div class="user-info">
-                <div class="username">Nena_creates</div>
-                <div class="time">15m ago • Follow</div>
-            </div>
-            <div class="menu-dots">⋯</div>
-        </div>
-
-        <div class="thumbnail-area">
-            <div class="placeholder-video">
-                <span>📸</span>
-                <span style="font-size:14px;">Tera content yahan</span>
-                <span style="font-size:12px; color:#888;">(Tu apni photo/video dalega)</span>
-            </div>
-            <div class="hot-badge">🔥 TRENDING</div>
-            <div class="views-overlay">👁️ 512K views • 1:28</div>
-        </div>
-
-        <div class="action-buttons">
-            <div class="left-actions">
-                <div class="action-item">❤️ 44.1K</div>
-                <div class="action-item">💬 Comment</div>
-                <div class="action-item">📤 Share</div>
-            </div>
-            <div class="save-icon">🔖</div>
-        </div>
-
-        <div class="caption">
-            <strong>Nena_creates</strong> Dekho aur share karo zaroor 😂 <span class="hashtags">#trending #explore</span>
-        </div>
-        <div class="comments">
-            View all 5.3K comments
-        </div>
-    </div>
-
-    <!-- ============ REEL CARD 3 (extra viral) ============ -->
-    <div class="reel-card" data-link="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65">
-        <div class="reel-header">
-            <div class="avatar">👨‍🎤</div>
-            <div class="user-info">
-                <div class="username">riya_world</div>
-                <div class="time">13h ago • Follow</div>
-            </div>
-            <div class="menu-dots">⋯</div>
-        </div>
-
-        <div class="thumbnail-area">
-            <div class="placeholder-video">
-                <span>🎥</span>
-                <span style="font-size:14px;">Tera media yahan</span>
-                <span style="font-size:12px; color:#888;">(Tu apna image/video replace karega)</span>
-            </div>
-            <div class="hot-badge">💥 VIRAL</div>
-            <div class="views-overlay">👁️ 340K views • 2:17</div>
-        </div>
-
-        <div class="action-buttons">
-            <div class="left-actions">
-                <div class="action-item">❤️ 28.7K</div>
-                <div class="action-item">💬 Comment</div>
-                <div class="action-item">📤 Share</div>
-            </div>
-            <div class="save-icon">🔖</div>
-        </div>
-
-        <div class="caption">
-            <strong>riya_world</strong> Itna fire content 😂 <span class="hashtags">#insta #viral</span>
-        </div>
-        <div class="comments">
-            View all 3.8K comments
-        </div>
-    </div>
-
-    <!-- AD BANNER (teri marzi se extra earning) -->
-    <div class="ad-banner" data-link="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65">
-        <span>✨ Sponsor • Click Here ✨</span>
-        <small>Support us → Earn Rewards</small>
-    </div>
+<div class="topbar">
+  <div class="logo"><span>HOT</span><span>REELS</span></div>
+  <div class="live-badge"><div class="live-dot"></div>LIVE NOW</div>
 </div>
 
-<div id="toastMsg" class="toast-msg">🚀 Redirecting to offer...</div>
+<!-- ============================================================
+     TRENDING BANNER – with custom image link (first image)
+  ============================================================ -->
+<div class="trending-section">
+  <div class="section-title">🔥 TRENDING NOW</div>
+  <a class="trending-banner" href="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65" target="_blank">
+    <img class="thumb-img" src="https://i.ibb.co/HfMGmKqj/47916832-007-cc72.jpg" alt="trending reel" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" onload="this.nextElementSibling.style.display='none';">
+    <div class="thumb-placeholder" style="display:none;"><span>🔥🎬</span>Trending Clip</div>
+    <div class="trending-tag">🔥 #1 TRENDING</div>
+    <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+    <div class="duration-badge">0:47</div>
+    <div class="card-info">
+      <div class="card-title">✨ VIRAL DANCE MOVE 🔥 <span class="hashtag">#HotReels</span> • 12M+ views</div>
+      <div class="card-stats">
+        <div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>12.4K</div>
+        <div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>2.1K</div>
+        <div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share</div>
+        <div class="views-count">98.2K views</div>
+      </div>
+    </div>
+  </a>
+</div>
 
+<!-- ===================== TOTAL 20 CARDS with exact image links provided ===================== -->
+<!-- CARD 1 -->
+<div class="reel-card">
+  <div class="reel-header"><div class="avatar" style="background:linear-gradient(135deg,#a259ff,#ff2d55);">A<div class="online-dot"></div></div><div class="user-info"><div class="username">alexa_reels</div><div class="user-meta">5m ago · 10K views</div></div><button class="follow-btn">+ Follow</button></div>
+  <a class="reel-thumb" href="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65" target="_blank"><img class="thumb-img" src="https://i.ibb.co/b5ghWnGG/34076717-016-7156.jpg" alt="reel 1" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" onload="this.nextElementSibling.style.display='none';"><div class="thumb-placeholder" style="display:none;"><span>🎥</span>Card 1</div><div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><div class="duration-badge">1:00</div></a>
+  <div class="card-info"><div class="card-title">🏝️ Tropical vibes & summer mood ✨ <span class="hashtag">#beachday</span></div><div class="card-stats"><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>5.1K</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>342</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share</div><div class="views-count">10K views</div></div></div>
+</div>
+<!-- CARD 2 -->
+<div class="reel-card">
+  <div class="reel-header"><div class="avatar" style="background:linear-gradient(135deg,#ff9500,#ff2d55);">B<div class="online-dot"></div></div><div class="user-info"><div class="username">motion.x</div><div class="user-meta">10m ago · 20K views</div></div><button class="follow-btn">+ Follow</button></div>
+  <a class="reel-thumb" href="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65" target="_blank"><img class="thumb-img" src="https://i.ibb.co/rf3QFNNw/38463078-114-7ad2.jpg" alt="reel 2" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="thumb-placeholder" style="display:none;"><span>📸</span>Card 2</div><div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><div class="duration-badge">1:10</div></a>
+  <div class="card-info"><div class="card-title">🤯 BEST transitions ever 🔥 <span class="hashtag">#editing</span> • must watch</div><div class="card-stats"><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>8.2K</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>570</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share</div><div class="views-count">20K views</div></div></div>
+</div>
+<!-- CARD 3 -->
+<div class="reel-card">
+  <div class="reel-header"><div class="avatar" style="background:linear-gradient(135deg,#30d158,#0099ff);">C<div class="online-dot"></div></div><div class="user-info"><div class="username">foodie_diaries</div><div class="user-meta">15m ago · 30K views</div></div><button class="follow-btn">+ Follow</button></div>
+  <a class="reel-thumb" href="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65" target="_blank"><img class="thumb-img" src="https://i.ibb.co/vCnYB2cH/71379223-081-3948.jpg" alt="reel 3" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="thumb-placeholder" style="display:none;"><span>📸</span>Card 3</div><div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><div class="duration-badge">0:45</div></a>
+  <div class="card-info"><div class="card-title">🍜 3 minute ramen hack 🍳 viral recipe <span class="hashtag">#foodie</span></div><div class="card-stats"><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>11.5K</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>890</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share</div><div class="views-count">30K views</div></div></div>
+</div>
+<!-- CARD 4 -->
+<div class="reel-card">
+  <div class="reel-header"><div class="avatar" style="background:linear-gradient(135deg,#ff2d55,#a259ff);">D<div class="online-dot"></div></div><div class="user-info"><div class="username">fit_mindset</div><div class="user-meta">20m ago · 15K views</div></div><button class="follow-btn">+ Follow</button></div>
+  <a class="reel-thumb" href="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65" target="_blank"><img class="thumb-img" src="https://i.ibb.co/5X8bFRTk/15843565-115-83c5.jpg" alt="reel 4" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="thumb-placeholder" style="display:none;"><span>📸</span>Card 4</div><div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><div class="duration-badge">1:25</div></a>
+  <div class="card-info"><div class="card-title">💪 10min morning workout that works 🔥 <span class="hashtag">#fitness</span></div><div class="card-stats"><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>6.7K</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>410</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share</div><div class="views-count">15K views</div></div></div>
+</div>
+<!-- CARD 5 -->
+<div class="reel-card">
+  <div class="reel-header"><div class="avatar" style="background:linear-gradient(135deg,#0099ff,#30d158);">E<div class="online-dot"></div></div><div class="user-info"><div class="username">travelbug</div><div class="user-meta">25m ago · 42K views</div></div><button class="follow-btn">+ Follow</button></div>
+  <a class="reel-thumb" href="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65" target="_blank"><img class="thumb-img" src="https://i.ibb.co/JW6bcRQq/70921958-054-16e7.jpg" alt="reel 5" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="thumb-placeholder" style="display:none;"><span>📸</span>Card 5</div><div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><div class="duration-badge">0:58</div></a>
+  <div class="card-info"><div class="card-title">🏔️ hidden paradise in switzerland 🇨🇭✨ <span class="hashtag">#travel</span> unreal views</div><div class="card-stats"><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>18.9K</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>1.2K</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share</div><div class="views-count">42K views</div></div></div>
+</div>
+<!-- CARD 6 -->
+<div class="reel-card">
+  <div class="reel-header"><div class="avatar" style="background:linear-gradient(135deg,#ff6b35,#ff2d55);">F<div class="online-dot"></div></div><div class="user-info"><div class="username">comedy.club</div><div class="user-meta">30m ago · 25K views</div></div><button class="follow-btn">+ Follow</button></div>
+  <a class="reel-thumb" href="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65" target="_blank"><img class="thumb-img" src="https://i.ibb.co/d4M17gxZ/39729710-012-3595.jpg" alt="reel 6" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="thumb-placeholder" style="display:none;"><span>📸</span>Card 6</div><div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><div class="duration-badge">1:33</div></a>
+  <div class="card-info"><div class="card-title">😂 this prank went too far... (gone wrong) 🤣 <span class="hashtag">#funny</span></div><div class="card-stats"><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>9.3K</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>680</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share</div><div class="views-count">25K views</div></div></div>
+</div>
+<!-- CARD 7 -->
+<div class="reel-card">
+  <div class="reel-header"><div class="avatar" style="background:linear-gradient(135deg,#a259ff,#0099ff);">G<div class="online-dot"></div></div><div class="user-info"><div class="username">tech.tips</div><div class="user-meta">35m ago · 18K views</div></div><button class="follow-btn">+ Follow</button></div>
+  <a class="reel-thumb" href="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65" target="_blank"><img class="thumb-img" src="https://i.ibb.co/m5jx9CXw/95345049-019-17c9.jpg" alt="reel 7" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="thumb-placeholder" style="display:none;"><span>💻</span>Card 7</div><div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><div class="duration-badge">0:52</div></a>
+  <div class="card-info"><div class="card-title">📱 5 hidden iOS features you never knew <span class="hashtag">#tech</span> 🔥</div><div class="card-stats"><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>7.2K</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>390</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share</div><div class="views-count">18K views</div></div></div>
+</div>
+<!-- CARD 8 -->
+<div class="reel-card">
+  <div class="reel-header"><div class="avatar" style="background:linear-gradient(135deg,#ff2d55,#ff9500);">H<div class="online-dot"></div></div><div class="user-info"><div class="username">streetstyle</div><div class="user-meta">42m ago · 55K views</div></div><button class="follow-btn">+ Follow</button></div>
+  <a class="reel-thumb" href="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65" target="_blank"><img class="thumb-img" src="https://i.ibb.co/nMt64fN7/32525878-052-ae7d.jpg" alt="reel 8" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="thumb-placeholder" style="display:none;"><span>👕</span>Card 8</div><div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><div class="duration-badge">1:05</div></a>
+  <div class="card-info"><div class="card-title">🕶️ Fall outfit ideas that turn heads <span class="hashtag">#ootd</span> 🔥</div><div class="card-stats"><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>22.1K</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>1.5K</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share</div><div class="views-count">55K views</div></div></div>
+</div>
+<!-- CARD 9 -->
+<div class="reel-card"><div class="reel-header"><div class="avatar" style="background:linear-gradient(135deg,#7b2fff,#ff2d55);">I<div class="online-dot"></div></div><div class="user-info"><div class="username">petlovers</div><div class="user-meta">50m ago · 12K views</div></div><button class="follow-btn">+ Follow</button></div><a class="reel-thumb" href="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65" target="_blank"><img class="thumb-img" src="https://i.ibb.co/SwSGx91Q/10656022-243-6360.jpg" alt="reel 9" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="thumb-placeholder" style="display:none;"><span>🐾</span>Card 9</div><div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><div class="duration-badge">0:39</div></a><div class="card-info"><div class="card-title">🐶 cute puppy compilation will make your day 💖 <span class="hashtag">#pets</span></div><div class="card-stats"><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>4.2K</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>280</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share</div><div class="views-count">12K views</div></div></div></div>
+<!-- CARD 10 -->
+<div class="reel-card"><div class="reel-header"><div class="avatar" style="background:linear-gradient(135deg,#ff9500,#a259ff);">J<div class="online-dot"></div></div><div class="user-info"><div class="username">motivationhub</div><div class="user-meta">1h ago · 60K views</div></div><button class="follow-btn">+ Follow</button></div><a class="reel-thumb" href="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65" target="_blank"><img class="thumb-img" src="https://i.ibb.co/27r3jk6Z/79261348-011-50e5.jpg" alt="reel 10" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="thumb-placeholder" style="display:none;"><span>📸</span>Card 10</div><div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><div class="duration-badge">1:15</div></a><div class="card-info"><div class="card-title">💯 never give up – best motivational reel <span class="hashtag">#success</span></div><div class="card-stats"><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>25.4K</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>2.1K</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share</div><div class="views-count">60K views</div></div></div></div>
+<!-- CARD 11 to 20 using remaining image links (total 20 distinct cards) -->
+<div class="reel-card"><div class="reel-header"><div class="avatar" style="background:linear-gradient(135deg,#30d158,#ff2d55);">K<div class="online-dot"></div></div><div class="user-info"><div class="username">artbyjess</div><div class="user-meta">1.2h ago · 8K views</div></div><button class="follow-btn">+ Follow</button></div><a class="reel-thumb" href="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65" target="_blank"><img class="thumb-img" src="https://i.ibb.co/6G2Kjbf/75206131-014-4e51.jpg" alt="reel 11" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="thumb-placeholder" style="display:none;"><span>🎨</span>Card 11</div><div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><div class="duration-badge">0:55</div></a><div class="card-info"><div class="card-title">🎨 satisfying painting process 🖌️ <span class="hashtag">#art</span></div><div class="card-stats"><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>3.2K</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>210</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share</div><div class="views-count">8K views</div></div></div></div>
+<!-- CARD 12 -->
+<div class="reel-card"><div class="reel-header"><div class="avatar" style="background:linear-gradient(135deg,#a259ff,#30d158);">L<div class="online-dot"></div></div><div class="user-info"><div class="username">musiclover</div><div class="user-meta">1.5h ago · 33K views</div></div><button class="follow-btn">+ Follow</button></div><a class="reel-thumb" href="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65" target="_blank"><img class="thumb-img" src="https://i.ibb.co/Z1X5ZnwD/70874116-165-5995.jpg" alt="reel 12" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="thumb-placeholder" style="display:none;"><span>🎵</span>Card 12</div><div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><div class="duration-badge">1:20</div></a><div class="card-info"><div class="card-title">🎧 chill lofi beats to relax/study <span class="hashtag">#music</span></div><div class="card-stats"><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>9.8K</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>650</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share</div><div class="views-count">33K views</div></div></div></div>
+<!-- CARD 13 -->
+<div class="reel-card"><div class="reel-header"><div class="avatar" style="background:linear-gradient(135deg,#ff6b35,#0099ff);">M<div class="online-dot"></div></div><div class="user-info"><div class="username">gamingzone</div><div class="user-meta">2h ago · 27K views</div></div><button class="follow-btn">+ Follow</button></div><a class="reel-thumb" href="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65" target="_blank"><img class="thumb-img" src="https://i.ibb.co/ycPRH9Tt/60875193-026-6a4f.jpg" alt="reel 13" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="thumb-placeholder" style="display:none;"><span>🎮</span>Card 13</div><div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><div class="duration-badge">0:48</div></a><div class="card-info"><div class="card-title">🎮 insane clutch moment in valorant <span class="hashtag">#gaming</span></div><div class="card-stats"><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>14.2K</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>890</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share</div><div class="views-count">27K views</div></div></div></div>
+<!-- CARD 14 -->
+<div class="reel-card"><div class="reel-header"><div class="avatar" style="background:linear-gradient(135deg,#ff2d55,#30d158);">N<div class="online-dot"></div></div><div class="user-info"><div class="username">diycrafts</div><div class="user-meta">2.5h ago · 9K views</div></div><button class="follow-btn">+ Follow</button></div><a class="reel-thumb" href="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65" target="_blank"><img class="thumb-img" src="https://i.ibb.co/F49K6T61/52925513-075-76d4.jpg" alt="reel 14" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="thumb-placeholder" style="display:none;"><span>✂️</span>Card 14</div><div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><div class="duration-badge">1:02</div></a><div class="card-info"><div class="card-title">✂️ amazing room decor DIY under $10 <span class="hashtag">#diy</span></div><div class="card-stats"><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>5.6K</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>330</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share</div><div class="views-count">9K views</div></div></div></div>
+<!-- CARD 15 -->
+<div class="reel-card"><div class="reel-header"><div class="avatar" style="background:linear-gradient(135deg,#a259ff,#ff9500);">O<div class="online-dot"></div></div><div class="user-info"><div class="username">naturepulse</div><div class="user-meta">3h ago · 22K views</div></div><button class="follow-btn">+ Follow</button></div><a class="reel-thumb" href="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65" target="_blank"><img class="thumb-img" src="https://i.ibb.co/678VMLpF/82043618-001-866f.jpg" alt="reel 15" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="thumb-placeholder" style="display:none;"><span>🌿</span>Card 15</div><div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><div class="duration-badge">0:53</div></a><div class="card-info"><div class="card-title">🌲 relaxing forest walk with nature sounds <span class="hashtag">#nature</span></div><div class="card-stats"><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>8.1K</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>470</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share</div><div class="views-count">22K views</div></div></div></div>
+<!-- CARD 16 -->
+<div class="reel-card"><div class="reel-header"><div class="avatar" style="background:linear-gradient(135deg,#0099ff,#ff6b35);">P<div class="online-dot"></div></div><div class="user-info"><div class="username">sports_mania</div><div class="user-meta">3.5h ago · 48K views</div></div><button class="follow-btn">+ Follow</button></div><a class="reel-thumb" href="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65" target="_blank"><img class="thumb-img" src="https://i.ibb.co/TMpqQ7n7/81109834-022-944f.jpg" alt="reel 16" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="thumb-placeholder" style="display:none;"><span>⚽</span>Card 16</div><div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><div class="duration-badge">1:12</div></a><div class="card-info"><div class="card-title">⚽ insane football skills that broke the internet <span class="hashtag">#sports</span></div><div class="card-stats"><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>27.5K</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>1.8K</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share</div><div class="views-count">48K views</div></div></div></div>
+<!-- CARD 17 to 20 (using last images) -->
+<div class="reel-card"><div class="reel-header"><div class="avatar" style="background:linear-gradient(135deg,#ff2d55,#7b2fff);">Q<div class="online-dot"></div></div><div class="user-info"><div class="username">beautytips</div><div class="user-meta">4h ago · 19K views</div></div><button class="follow-btn">+ Follow</button></div><a class="reel-thumb" href="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65" target="_blank"><img class="thumb-img" src="https://i.ibb.co/fzNVMjtr/92421621-028-6972.jpg" alt="reel 17" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="thumb-placeholder" style="display:none;"><span>💄</span>Card 17</div><div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><div class="duration-badge">0:44</div></a><div class="card-info"><div class="card-title">💄 easy everyday makeup tutorial <span class="hashtag">#beauty</span></div><div class="card-stats"><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>12.3K</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>790</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share</div><div class="views-count">19K views</div></div></div></div>
+<!-- CARD 18 -->
+<div class="reel-card"><div class="reel-header"><div class="avatar" style="background:linear-gradient(135deg,#30d158,#ff9500);">R<div class="online-dot"></div></div><div class="user-info"><div class="username">booktok</div><div class="user-meta">4.5h ago · 14K views</div></div><button class="follow-btn">+ Follow</button></div><a class="reel-thumb" href="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65" target="_blank"><img class="thumb-img" src="https://i.ibb.co/BH51JmbL/32582606-041-bdf5.jpg" alt="reel 18" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="thumb-placeholder" style="display:none;"><span>📚</span>Card 18</div><div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><div class="duration-badge">1:18</div></a><div class="card-info"><div class="card-title">📚 book recommendations that make you cry <span class="hashtag">#booktok</span></div><div class="card-stats"><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>6.1K</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>410</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share</div><div class="views-count">14K views</div></div></div></div>
+<!-- CARD 19 -->
+<div class="reel-card"><div class="reel-header"><div class="avatar" style="background:linear-gradient(135deg,#a259ff,#ff6b35);">S<div class="online-dot"></div></div><div class="user-info"><div class="username">dad_jokes</div><div class="user-meta">5h ago · 31K views</div></div><button class="follow-btn">+ Follow</button></div><a class="reel-thumb" href="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65" target="_blank"><img class="thumb-img" src="https://i.ibb.co/LXfFWwZ8/73596584-166-16ef.jpg" alt="reel 19" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="thumb-placeholder" style="display:none;"><span>😂</span>Card 19</div><div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><div class="duration-badge">0:38</div></a><div class="card-info"><div class="card-title">😂 funniest dad jokes compilation 🤣 <span class="hashtag">#comedy</span></div><div class="card-stats"><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>16.4K</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>1.1K</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share</div><div class="views-count">31K views</div></div></div></div>
+<!-- CARD 20 (final) -->
+<div class="reel-card"><div class="reel-header"><div class="avatar" style="background:linear-gradient(135deg,#ff9500,#30d158);">T<div class="online-dot"></div></div><div class="user-info"><div class="username">cinematic_</div><div class="user-meta">6h ago · 77K views</div></div><button class="follow-btn">+ Follow</button></div><a class="reel-thumb" href="https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65" target="_blank"><img class="thumb-img" src="https://i.ibb.co/mChDCp33/90911361-146-2da4.jpg" alt="reel 20" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="thumb-placeholder" style="display:none;"><span>🎬</span>Card 20</div><div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><div class="duration-badge">1:30</div></a><div class="card-info"><div class="card-title">🎬 cinematic short film - emotional journey <span class="hashtag">#cinematic</span></div><div class="card-stats"><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>33.2K</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>2.4K</div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share</div><div class="views-count">77K views</div></div></div></div>
+
+<div class="bottom-spacer"></div>
+<div class="bottom-nav">
+  <div class="nav-item active"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/></svg><span>For You</span></div>
+  <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profile</span></div>
+  <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg><span>Reels</span></div>
+</div>
 <script>
-    // Tera direct link (kahi bhi click karega toh yahi khulega)
-    const REDIRECT_URL = "https://www.profitablecpmratenetwork.com/q9dndp61p3?key=ff6f77c9fbb69e92512639ef7b646e65";
-
-    // Function to redirect and show toast
-    function handleClickAndRedirect(event) {
-        // Agar click kisi special element pe ho toh bhi redirect karega
-        // Pure card aur banner ke liye kaam karega
-        event.stopPropagation();
-        showToast("⏳ Opening link...");
-        setTimeout(() => {
-            window.location.href = REDIRECT_URL;
-        }, 150);
-    }
-
-    function showToast(msg) {
-        const toast = document.getElementById("toastMsg");
-        toast.innerText = msg;
-        toast.classList.add("show");
-        setTimeout(() => {
-            toast.classList.remove("show");
-        }, 1200);
-    }
-
-    // Sabhi .reel-card aur .ad-banner pe click listener laga do
-    const clickableElements = document.querySelectorAll('.reel-card, .ad-banner');
-    clickableElements.forEach(el => {
-        el.addEventListener('click', handleClickAndRedirect);
+  document.querySelectorAll('.follow-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault(); e.stopPropagation();
+      if(btn.innerText === '+ Follow') { btn.innerText = '✔ Following'; btn.style.background = '#2b2b2b'; btn.style.color = '#aaa'; } 
+      else { btn.innerText = '+ Follow'; btn.style.background = 'linear-gradient(135deg,#a259ff,#7b2fff)'; btn.style.color = '#fff'; }
     });
-
-    // Extra: Agar koi bhi inner element click ho toh bhi kaam kare (par already event bubbling se kaam karega)
-    console.log("✅ Landing page ready! Har click tera direct link khol dega. Photo/text tu khud dalega.");
+  });
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => { document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active')); item.classList.add('active'); });
+  });
 </script>
 </body>
 </html>
